@@ -1,8 +1,9 @@
+import { useRef, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { BiShoppingBag, BiHeart, BiMenu } from "react-icons/bi";
 
 import { Container, Row } from "reactstrap";
-import { motion } from "framer-motion";
+import { m, motion } from "framer-motion";
 
 import logo from "../../assets/images/eco-logo.png";
 import userIcon from "../../assets/images/user-icon.png";
@@ -11,8 +12,29 @@ import { nav__links } from "../../assets/data/constant";
 import "./header.css";
 
 const Header = () => {
+    const headerRef = useRef(null);
+    const menuRef = useRef(null);
+
+    const stickyHeaderFunc = () => {
+        window.addEventListener("scroll", () => {
+            if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
+                headerRef.current.classList.add("sticky__header");
+            } else {
+                headerRef.current.classList.remove("sticky__header");
+            }
+        })
+    }
+
+    useEffect(() => {
+        stickyHeaderFunc();
+        return () => window.removeEventListener("scroll", stickyHeaderFunc);
+    })
+
+    const menuToggle = () => menuRef.current.classList.toggle("active__menu");
+
+
     return (
-        <header className="header">
+        <header className="header" ref={headerRef}>
             <Container>
                 <Row>
                     <div className="nav__wrapper">
@@ -20,7 +42,7 @@ const Header = () => {
                             <img src={logo} alt="logo" />
                             <h1>Multimart</h1>
                         </div>
-                        <div className="navigation">
+                        <div className="navigation" ref={menuRef} onClick={menuToggle}>
                             <ul className="menu">
                                 {
                                     nav__links.map((item) => (
@@ -43,10 +65,9 @@ const Header = () => {
                                 <span className="badge">1</span>
                             </span>
                             <span><motion.img whileTap={{ scale: 1.2 }} src={userIcon} alt="user" /></span>
-                        </div>
-
-                        <div className="mobile__menu">
-                            <span><BiMenu /></span>
+                            <div className="mobile__menu">
+                                <span onClick={menuToggle}><BiMenu /></span>
+                            </div>
                         </div>
                     </div>
                 </Row>
