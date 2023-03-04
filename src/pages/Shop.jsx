@@ -10,7 +10,10 @@ import "../styles/shop.scss";
 
 const Shop = () => {
     const [productsData, setProductsData] = useState(products);
+    const [sortBy, setSortBy] = useState("");
+
     const filterFunctions = {
+        all: () => true, // default
         sofa: item => item.category === 'sofa',
         chair: item => item.category === 'chair',
         mobile: item => item.category === 'mobile',
@@ -20,6 +23,7 @@ const Shop = () => {
 
     const handleFilter = e => {
         const filterValue = e.target.value;
+        setSortBy("");
         if (filterFunctions[filterValue]) {
             const filteredProducts = products.filter(filterFunctions[filterValue]);
             setProductsData(filteredProducts);
@@ -32,6 +36,18 @@ const Shop = () => {
         setProductsData(searchedProducts);
     }
 
+    const handleSort = e => {
+        const sortValue = e.target.value;
+        setSortBy(sortValue);
+        const sortedProducts = [...productsData];
+        if (sortValue === "ascending") {
+            sortedProducts.sort((a, b) => a.price - b.price);
+        } else if (sortValue === "descending") {
+            sortedProducts.sort((a, b) => b.price - a.price);
+        }
+        setProductsData(sortedProducts);
+    };
+
     return (
         <Helmet title="Shop">
             <CommonSection title="Product Details" />
@@ -41,7 +57,7 @@ const Shop = () => {
                         <Col lg="3" md="3">
                             <div className="filter__widget">
                                 <select onChange={handleFilter}>
-                                    <option>Filter by category</option>
+                                    <option value="all">Filter by category</option>
                                     <option value="chair">Chair</option>
                                     <option value="mobile">Mobile</option>
                                     <option value="sofa">Sofa</option>
@@ -52,8 +68,8 @@ const Shop = () => {
                         </Col>
                         <Col lg="3" md="3">
                             <div className="filter__widget">
-                                <select>
-                                    <option>Sort by</option>
+                                <select value={sortBy} onChange={handleSort}>
+                                    <option value="">Sort by</option>
                                     <option value="ascending">Ascending</option>
                                     <option value="descending">Descending</option>
                                 </select>
