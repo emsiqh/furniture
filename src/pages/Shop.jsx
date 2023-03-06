@@ -3,9 +3,9 @@ import { Container, Row, Col } from "reactstrap";
 import { BsSearch } from "react-icons/bs";
 
 import CommonSection from "../components/UI/CommonSection";
+import ProductsList from "../components/UI/ProductsList";
 import Helmet from "../components/Helmet/Helmet";
 import products from "../assets/data/products";
-import ProductsList from "../components/UI/ProductsList";
 import "../styles/shop.scss";
 
 const Shop = () => {
@@ -54,7 +54,7 @@ const Shop = () => {
             <section>
                 <Container>
                     <Row>
-                        <Col lg="3" md="3">
+                        <Col lg="3" md="6">
                             <div className="filter__widget">
                                 <select onChange={handleFilter}>
                                     <option value="all">Filter by category</option>
@@ -66,7 +66,7 @@ const Shop = () => {
                                 </select>
                             </div>
                         </Col>
-                        <Col lg="3" md="3">
+                        <Col lg="3" md="6" className="text-end">
                             <div className="filter__widget">
                                 <select value={sortBy} onChange={handleSort}>
                                     <option value="">Sort by</option>
@@ -75,7 +75,7 @@ const Shop = () => {
                                 </select>
                             </div>
                         </Col>
-                        <Col lg="6" md="6">
+                        <Col lg="6" md="12">
                             <div className="search__box">
                                 <input type="text" placeholder="Search..." onChange={handleSearch} />
                                 <span>
