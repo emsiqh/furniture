@@ -1,6 +1,6 @@
 import { useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { BiShoppingBag, BiHeart, BiMenu } from "react-icons/bi";
 import { Container, Row } from "reactstrap";
 import { motion } from "framer-motion";
@@ -15,6 +15,7 @@ const Header = () => {
     const headerRef = useRef(null);
     const menuRef = useRef(null);
     const totalQuantity = useSelector(state => state.cart.totalQuantity);
+    const navigate = useNavigate();
 
     const stickyHeaderFunc = () => {
         window.addEventListener("scroll", () => {
@@ -32,6 +33,10 @@ const Header = () => {
     })
 
     const menuToggle = () => menuRef.current.classList.toggle("active__menu");
+
+    const navigateToCart = () => {
+        navigate("/cart");
+    };
 
 
     return (
@@ -61,7 +66,7 @@ const Header = () => {
                                 <BiHeart fontSize="1.4rem" color="#0a1d37" cursor="pointer" />
                                 <span className="badge">1</span>
                             </span>
-                            <span className="cart__icon">
+                            <span className="cart__icon" onClick={navigateToCart}>
                                 <BiShoppingBag fontSize="1.4rem" color="#0a1d37" cursor="pointer" />
                                 <span className="badge">{totalQuantity}</span>
                             </span>
