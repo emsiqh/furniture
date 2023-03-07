@@ -1,21 +1,28 @@
 import { useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { BiShoppingBag, BiHeart, BiMenu } from "react-icons/bi";
 import { Container, Row } from "reactstrap";
 import { motion } from "framer-motion";
+import { signOut } from "firebase/auth";
+import { toast } from "react-toastify";
+
 
 import logo from "../../assets/images/eco-logo.png";
 import userIcon from "../../assets/images/user-icon.png";
 import { nav__links } from "../../assets/data/constant";
+import userAuth from "../../custom-hooks/userAuth";
+import { auth } from "../../firebase.config";
 
 import "./header.css";
 
 const Header = () => {
     const headerRef = useRef(null);
     const menuRef = useRef(null);
+    const userActionRef = useRef(null);
     const totalQuantity = useSelector(state => state.cart.totalQuantity);
     const navigate = useNavigate();
+    const { currentUser } = userAuth();
 
     const stickyHeaderFunc = () => {
         window.addEventListener("scroll", () => {
@@ -33,6 +40,16 @@ const Header = () => {
     })
 
     const menuToggle = () => menuRef.current.classList.toggle("active__menu");
+    const userActionToggle = () => userActionRef.current.classList.toggle("show__userActions");
+
+    const logout = () => {
+        signOut(auth).then(() => {
+            toast.success("Logged out");
+            navigate('/home');
+        }).catch(err => {
+            toast.error("Something went wrong");
+        })
+    }
 
     const navigateToCart = () => {
         navigate("/cart");
@@ -70,7 +87,21 @@ const Header = () => {
                                 <BiShoppingBag fontSize="1.4rem" color="#0a1d37" cursor="pointer" />
                                 <span className="badge">{totalQuantity}</span>
                             </span>
-                            <span><motion.img whileTap={{ scale: 1.2 }} src={userIcon} alt="user" /></span>
+                            <div className="user__profile">
+                                <motion.img whileTap={{ scale: 1.2 }} src={currentUser ? currentUser.photoURL : userIcon} alt="user" onClick={userActionToggle} />
+                                <div
+                                    className="user__actions"
+                                    ref={userActionRef}
+                                    onClick={userActionToggle}>
+                                    {
+                                        currentUser ? <span onClick={logout}>Logout</span> :
+                                            <div className="d-flex align-items-center justify-content-center flex-column">
+                                                <Link to="/login">Login</Link>
+                                                <Link to="/register">Register</Link>
+                                            </div>
+                                    }
+                                </div>
+                            </div>
                             <div className="mobile__menu">
                                 <span onClick={menuToggle}><BiMenu /></span>
                             </div>

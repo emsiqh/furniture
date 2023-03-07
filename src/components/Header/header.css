@@ -69,10 +69,37 @@
     z-index: 10;
 }
 
-.nav__icons span img {
+.nav__icons .user__profile img {
     width: 30px;
     height: 30px;
+    border-radius: 50%;
     cursor: pointer;
+}
+
+.nav__icons .user__profile {
+    position: relative;
+    z-index: 9;
+}
+
+.nav__icons .user__profile .user__actions {
+    position: absolute;
+    top: 98%;
+    left: -3rem;
+    width: 150px;
+    z-index: 10;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background: var(--card-bg-01);
+    line-height: 30px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: none;
+}
+
+.nav__icons .user__profile .show__userActions {
+    display: flex;
 }
 
 .mobile__menu {
