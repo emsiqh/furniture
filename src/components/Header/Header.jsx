@@ -21,6 +21,7 @@ const Header = () => {
     const menuRef = useRef(null);
     const userActionRef = useRef(null);
     const totalQuantity = useSelector(state => state.cart.totalQuantity);
+    const favQuantity = useSelector(state => state.favorites.favQuantity);
     const navigate = useNavigate();
     const { currentUser } = userAuth();
 
@@ -55,6 +56,10 @@ const Header = () => {
         navigate("/cart");
     };
 
+    const navigateToFav = () => {
+        navigate("/fav");
+    };
+
 
     return (
         <header className="header" ref={headerRef}>
@@ -79,9 +84,9 @@ const Header = () => {
                         </div>
 
                         <div className="nav__icons">
-                            <span className="fav__icon">
+                            <span className="fav__icon" onClick={navigateToFav}>
                                 <BiHeart fontSize="1.4rem" color="#0a1d37" cursor="pointer" />
-                                <span className="badge">1</span>
+                                <span className="badge">{favQuantity}</span>
                             </span>
                             <span className="cart__icon" onClick={navigateToCart}>
                                 <BiShoppingBag fontSize="1.4rem" color="#0a1d37" cursor="pointer" />
