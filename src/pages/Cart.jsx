@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Container, Row, Col } from "reactstrap";
-import { AiFillDelete } from "react-icons/ai";
+import { AiFillDelete, AiOutlineArrowUp, AiOutlineArrowDown } from "react-icons/ai";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from 'react-toastify';
 import { Link } from "react-router-dom";
@@ -18,7 +18,15 @@ const Cart = () => {
     const deleteProduct = (item) => {
         dispatch(cartActions.deleteItem(item.id));
         toast.success("Product deleted successfully");
-    }
+    };
+
+    const increaseQuantity = (item) => {
+        dispatch(cartActions.increaseQuantity(item.id));
+    };
+
+    const decreaseQuantity = (item) => {
+        dispatch(cartActions.decreaseQuantity(item.id));
+    };
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -51,8 +59,17 @@ const Cart = () => {
                                                         <td><img src={item.imgUrl} /></td>
                                                         <td>{item.productName}</td>
                                                         <td>{item.price}</td>
-                                                        <td>{item.quantity}</td>
-                                                        <td><AiFillDelete onClick={() => deleteProduct(item)} /></td>
+                                                        <td>
+                                                            <div className="d-flex justify-content-around">
+                                                                {item.quantity}
+                                                                <div className="d-flex flex-column">
+                                                                    <AiOutlineArrowUp className="change__qty-icon" onClick={() => increaseQuantity(item)} />
+                                                                    <AiOutlineArrowDown className="change__qty-icon" onClick={() => decreaseQuantity(item)} />
+                                                                </div>
+                                                            </div>
+
+                                                        </td>
+                                                        <td><AiFillDelete className="cart__icon" onClick={() => deleteProduct(item)} /></td>
                                                     </tr>
                                                 ))
                                             }
