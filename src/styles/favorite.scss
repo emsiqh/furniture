@@ -1,8 +1,14 @@
+@media only screen and (max-width: 576px) {
+  .fav__item {
+    gap: 2rem;
+  }
+}
+
 .fav__item {
   border: 1px solid var(--primary-color);
   border-radius: 12px;
   display: flex;
-  gap: 2rem;
+  gap: 4rem;
   margin-bottom: 2rem;
 
   .fav__item-img {
