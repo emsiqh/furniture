@@ -54,7 +54,7 @@ const Shop = () => {
             <section>
                 <Container>
                     <Row>
-                        <Col lg="3" md="6">
+                        <Col lg="3" md="6" sm="12">
                             <div className="filter__widget">
                                 <select onChange={handleFilter}>
                                     <option value="all">Filter by category</option>

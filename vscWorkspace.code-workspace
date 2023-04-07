@@ -1,8 +1,13 @@
 {
 	"folders": [
 		{
+			"path": "../nhap"
+		},
+		{
 			"path": "."
 		}
 	],
-	"settings": {}
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "nhap"
+	}
 }
