@@ -5,6 +5,15 @@
 		},
 		{
 			"path": "."
+		},
+		{
+			"path": "../food-delivery-app"
+		},
+		{
+			"path": "../Mobile - React Native/my-app"
+		},
+		{
+			"path": "../Mobile - React Native/trip-booking-app"
 		}
 	],
 	"settings": {
