@@ -1,5 +1,5 @@
 import { useRef, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { BiShoppingBag, BiHeart, BiMenu } from "react-icons/bi";
 import { Container, Row } from "reactstrap";
@@ -15,6 +15,8 @@ import userAuth from "../../custom-hooks/userAuth";
 import { auth } from "../../firebase.config";
 
 import "./header.css";
+import { cartActions } from "../../redux/slices/cartSlice";
+import { favActions } from "../../redux/slices/favSlice";
 
 const Header = () => {
     const headerRef = useRef(null);
@@ -43,9 +45,13 @@ const Header = () => {
     const menuToggle = () => menuRef.current.classList.toggle("active__menu");
     const userActionToggle = () => userActionRef.current.classList.toggle("show__userActions");
 
+    const dispatch = useDispatch();
+
     const logout = () => {
         signOut(auth).then(() => {
             toast.success("Logged out");
+            dispatch(cartActions.clearAllItems());
+            dispatch(favActions.clearAllFavorites());
             navigate('/home');
         }).catch(err => {
             toast.error("Something went wrong");

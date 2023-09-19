@@ -32,6 +32,11 @@ const favSlice = createSlice({
                 state.favQuantity--;
             }
         },
+        // clear the favorites
+        clearAllFavorites: (state) => {
+            state.favItems = [];
+            state.favQuantity = 0;
+        },
     }
 });
 
